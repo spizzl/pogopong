@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="libraries/socket.io-client/dist/socket.io.js">
-        </script>
+        <script src="/socket.io/socket.io.js"></script>
+
         <script>
             //DER KOT
 
   var socket = io()
-  var el
-
   socket.on('status', function(onlineplayer) {
     dies = document.getElementById('server-time')
-    dies.innerHTML = onlineplayer;
+    dies.innerHTML = onlineplayer
   })
         </script>
     </head>

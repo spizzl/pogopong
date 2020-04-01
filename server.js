@@ -17,7 +17,7 @@ var online = 0
 zocket.on('connection', (socket) => {
   console.log('Atze ist da');
   online += 1
-  zocket.on('disconnect', () => online -= 1;
+  socket.on('disconnect', () => online -= 1);
 });
 
-setInterval(() => zocket.emit('status', online, 500);
+setInterval(() => zocket.emit('status', online), 1000);
