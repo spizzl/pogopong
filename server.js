@@ -11,10 +11,13 @@ const server = express()
   .listen(PORT, () => console.log(`lausche auf ${PORT}`));
 
 const zocket = socketIO(server);
+var online = 0
+
 
 zocket.on('connection', (socket) => {
   console.log('Atze ist da');
-  socket.on('disconnect', () => console.log('Pole'));
+  online += 1
+  zocket.on('disconnect', () => online -= 1;
 });
 
-setInterval(() => zocket.emit('tacho', new Date().toTimeString()), 1000);
+setInterval(() => zocket.emit('status', online, 500);
