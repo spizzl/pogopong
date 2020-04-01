@@ -11,9 +11,9 @@
   var socket = io()
   var el
 
-  socket.on("tacho", function(timeString) {
+  socket.on('status', function(onlineplayer) {
     dies = document.getElementById('server-time')
-    dies.innerHTML = 'Server time: ' + timeString;
+    dies.innerHTML = onlineplayer;
   })
 
   </script>
@@ -21,21 +21,22 @@
 
 <body>
 
-
+<center>
 <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
       <img src="/lang-logo.png">
     </a>
     <h1>PongoPing</h1>
-    <p>Es ist:</p>
-    <p id='server-time'></p>
+    <a>Es sind momentan</a>
+    <a id='server-time'>0</a>
+    <a> Atzen online</a>
     </div>
 </div>
 <div class="container">
 
 </div>
 
-
+</center>
 </body>
 </html>
