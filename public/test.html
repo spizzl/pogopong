@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+
+  <script>
+  //DER KOT
+
+  var socket = io()
+  var el
+
+  socket.on('status', function(onlineplayer) {
+    dies = document.getElementById('server-time')
+    dies.innerHTML = onlineplayer;
+  })
+
+  </script>
+</head>
+
+<body>
+
+<center>
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="/lang-logo.png">
+    </a>
+    <h1>PongoPing</h1>
+    <a>Es sind momentan</a>
+    <a id='server-time'>0</a>
+    <a> Atzen online</a>
+    </div>
+</div>
+<div class="container">
+
+</div>
+
+</center>
+</body>
+</html>

@@ -1,42 +1,58 @@
 <!DOCTYPE html>
 <html>
-<head>
-
-  <script src="/socket.io/socket.io.js"></script>
-
-
-  <script>
-  //DER KOT
-
-  var socket = io()
-  var el
-
-  socket.on('status', function(onlineplayer) {
-    dies = document.getElementById('server-time')
-    dies.innerHTML = onlineplayer;
-  })
-
-  </script>
-</head>
-
-<body>
-
-<center>
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>PongoPing</h1>
-    <a>Es sind momentan</a>
-    <a id='server-time'>0</a>
-    <a> Atzen online</a>
-    </div>
-</div>
-<div class="container">
-
-</div>
-
-</center>
-</body>
+    <head>
+        <meta charset="utf-8">
+            <title>
+                Pong
+            </title>
+            <script src="/libraries/p5.js" type="text/javascript">
+            </script>
+            <script src="/libraries/p5.sound.js" type="text/javascript">
+            </script>
+            <script src="/libraries/jquery-3.1.1.js" type="text/javascript">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js" type="text/javascript">
+            </script>
+            <script src="puck.js" type="text/javascript">
+            </script>
+            <script src="paddle.js" type="text/javascript">
+            </script>
+            <script src="userInput.js" type="text/javascript">
+            </script>
+            <script src="animations.js" type="text/javascript">
+            </script>
+            <script src="networking.js" type="text/javascript">
+            </script>
+            <script src="mainGame.js" type="text/javascript">
+            </script>
+        </meta>
+    </head>
+    <body>
+        <center>
+            <div id="chooseNameField">
+                <input id="nameInput" name="playerName" type="">
+                    <button id="startGame" onclick="startGame()">
+                        Start
+                    </button>
+                </input>
+            </div>
+        </center>
+    </body>
 </html>
+<style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+    }
+
+    canvas {
+        margin-left: 25%;
+        margin-top: 2%;
+    }
+
+    #chooseNameField {
+        align-self: center;
+    }
+</style>
