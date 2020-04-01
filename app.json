@@ -1,0 +1,8 @@
+{
+  "name": "pongoping",
+  "description": "Stell dich auch PongoPing Jetzt",
+  "repository": "https://github.com/holzbauleiste/pongoping",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}

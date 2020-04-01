@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+
+
+
+  <script>
+  //DER KOT
+
+  var socket = io()
+  var el
+
+  socket.on("tacho", function(timeString) {
+    dies = document.getElementsById('server-time')
+    dies.innerHTML = 'Server time: ' + timeString;
+  })
+
+  </script>
+</head>
+
+<body>
+
+  <% include ../partials/nav.ejs %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="/lang-logo.png">
+    </a>
+    <h1>PongoPing</h1>
+    <p>Es ist:</p>
+    <p id='server-time'></p>
+    </div>
+</div>
+<div class="container">
+
+</div>
+
+
+</body>
+</html>
