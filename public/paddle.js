@@ -23,6 +23,10 @@ class Paddle {
         translate(this.x, this.y)
         rotate(this.rot)
         rect(0, 0, this.w, this.h)
+        textSize(15)
+        fill(255)
+        rotate(this.rot)
+        text(this.name, 0, playerSize * 0.6)
         pop()
     }
     showscore() {

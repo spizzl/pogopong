@@ -5,7 +5,6 @@ function keyReleased() {
 }
 
 function keyPressed() {
-    console.log(key);
     if (key == 'ArrowUp' || key == 'W' || key == 'w') {
         players[0].move(-10);
     } else if (key == 'ArrowDown' || key == 'S' || key == 's') {
