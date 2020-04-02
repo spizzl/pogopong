@@ -37,7 +37,9 @@ function startGame() {
     //
     var playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
+    $('#chooseNameField')[0].remove()
     players[0].name = playerName
+    net.tellNewPlayer()
     loop()
     gameIsStarted = true
 }

@@ -3,6 +3,10 @@ class Network {
 
 	}
 
+	tellNewPlayer() {
+		
+	}
+
 	sendPlayer() {
 
 	}
