@@ -1,11 +1,9 @@
 'use strict';
 const express = require('express');
-const socketIO = require('socket.io');
-
 const PORT = process.env.PORT || 5000;
-const INDEX = '/public/test.html';
 var app = express()
 var server = app.listen(PORT);
+const io = require('socket.io')(server);
 
 
 app.use(express.static('public'));
@@ -18,11 +16,30 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`lausche auf ${PORT}`));
 */
-const zocket = socketIO(server);
 
-zocket.on('connection', (socket) => {
-  console.log('Atze ist da');
-  socket.on('disconnect', () => console.log('Pole'));
-});
+var atzen = [];
+var player = [];
 
-setInterval(() => zocket.emit('tacho', new Date().toTimeString()), 1000);
+io.sockets.on('connection', (socket) => {
+  atzen.push([socket, 0])
+  console.log('Atze ist da')
+
+  socket.on('disconnect', function() {
+    clog('Ein Atze weniger mit der Nummer ' + socket.id);
+  })
+
+  socket.on('start', function() {
+    var index = atzen.indexOf(socket);
+    player.push(socket)
+  })
+
+  socket.on('leave', function() {
+    var index = player.indexOf(socket);
+    atzen.slice(index)
+  })
+
+  socket.on('wieviele', function() {
+    socket.emit("soviele", atzen.length);
+  })
+
+})

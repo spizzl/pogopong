@@ -7,10 +7,15 @@
             //DER KOT
 
   var socket = io()
-  socket.on('status', function(onlineplayer) {
+  socket.on('soviele', function(onlineplayer) {
+    console.log("Ehre")
     dies = document.getElementById('server-time')
     dies.innerHTML = onlineplayer
   })
+
+  otzo = function() {
+    socket.emit("wieviele")
+  }
         </script>
     </head>
     <body>
@@ -24,6 +29,7 @@
                     <h1>
                         PongoPing
                     </h1>
+                    <button onclick="otzo();"></button>
                     <a>
                         Es sind momentan
                     </a>
