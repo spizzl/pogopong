@@ -1,8 +1,9 @@
 class Paddle {
-    constructor(x, y, rot, name) {
+    constructor(id, name, x, y, rotation) {
+        this.id = id
         this.x = x
         this.y = y
-        this.rot = rot
+        this.rot = rotation
         //
         this.h = width / 5
         this.w = this.h / 5
