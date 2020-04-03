@@ -83,16 +83,20 @@ class Puck {
             }
         }
         */
-    checkGoal(g) {
-        var goal = {
+    checkGoal(GOOOLisisisis) {
+        var g = {
             x: 999,
             y: 999,
             w: 100,
             h: 100
         }
-        if (this.y - this.r < p.y + p.h / 2 //
-            && this.y + this.r > p.y - p.h / 2 //
-            && (this.x - this.r < p.x + p.w / 2 || this.x + this.r > p.x - p.w / 2)) {}
+        if (this.y - this.r < g.y + g.h / 2 //
+            && this.y + this.r > g.y - g.h / 2 //
+            && (this.x - this.r < g.x + g.w / 2 || this.x + this.r > g.x - g.w / 2)) {
+            //
+        }
+    }
+    checkEdges() {
         if (this.y < 0 || this.y > height) {
             this.yspeed *= -1;
         }
