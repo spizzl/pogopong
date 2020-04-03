@@ -1,4 +1,7 @@
 class PuckHandler {
+    bla() {
+        console.log("bla")
+    }
     //
     spawnPuck() {
         this.puck = new Puck()
@@ -24,7 +27,7 @@ class PuckHandler {
         return data
     }
     //
-    puckHitsPaddle(p) {
+    checkPuckCollision(p) {
         if (this.puck.y - this.puck.r < p.y + p.h / 2 //
             && this.puck.y + this.puck.r > p.y - p.h / 2 //
             && (this.puck.x - this.puck.r < p.x + p.w / 2 || this.puck.x + this.puck.r > p.x - p.w / 2)) {
@@ -45,7 +48,6 @@ class PuckHandler {
             }
         }
     }
-    deflectPuck(p) {}
 }
 //
 class Puck {
@@ -103,3 +105,5 @@ class Puck {
         }
     }
 }
+//
+module.exports = PuckHandler

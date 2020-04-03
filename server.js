@@ -13,7 +13,9 @@ function clog(msg) {
 var atzen = []
 var players = []
 //
+var PuckHandler = require('./puckHandler.js')
 var puckHandler = new PuckHandler()
+puckHandler.bla()
 var updateHeartbeat = 200
 //
 io.sockets.on('connection', (socket) => {
