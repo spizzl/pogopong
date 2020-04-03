@@ -3,17 +3,21 @@ let rightscore = 0
 var players = []
 var net, socket
 var gameIsStarted = false
+var updateSpeed = 1000 //in milliseconds
 //
 var canvSize, playerSize
+
+function clog(msg) {
+    console.log(msg);
+}
 
 function setup() {
     canvSize = windowWidth / 2
     playerSize = canvSize / 5
     if (canvSize < 500) canvSize = 500
-    createCanvas(canvSize, canvSize)
+    createCanvas(500, 500)
     //TWO PLAYERS
-    players.push(new Paddle(width - 20, height / 2, 0))
-    players.push(new Paddle(20, height / 2, 0))
+    //players.push(new Paddle("", "", 20, height / 2, 0))
     //THREE PLAYERS
     /*
         players.push(new Paddle(width - playerSize, height / 2 + playerSize, 45))
@@ -21,7 +25,7 @@ function setup() {
         players.push(new Paddle(width / 2, height / 2 - playerSize * 2, 90))
     */
     //
-    net = new Network()
+    net = new NetworkController()
     puck = new Puck()
     //
     noLoop()
@@ -31,30 +35,30 @@ function setup() {
 }
 
 function startGame() {
-    //
-    socket = io.connect('http://localhost:3003');
+    socket = io.connect('http://localhost:5000');
     net.setup()
     //
     var playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
     $('#chooseNameField')[0].remove()
-    players[0].name = playerName
-    net.tellNewPlayer()
+    players.push(new Paddle(socket.id, playerName))
+    //
+    net.sendStartSignal()
     loop()
     gameIsStarted = true
 }
 
 function draw() {
     if (gameIsStarted) {
-        background(0)
+        clear()
         players[0].update()
-        net.sendPlayer()
-        net.receivePlayers()
-        net.receivePuck()
+        //
+        if (net.canUpdate) {
+            net.sendUpdate()
+        }
         players.forEach(function(player) {
             player.show()
         })
         puck.show()
-        //showscore()
     }
 }

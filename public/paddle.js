@@ -1,14 +1,17 @@
 class Paddle {
-    constructor(x, y, rot, name) {
-        this.x = x
-        this.y = y
-        this.rot = rot
+    constructor(id, name) {
+        this.id = id
         //
         this.h = width / 5
         this.w = this.h / 5
         this.ychange = 0
         this.score = 0;
         this.name = name || "";
+    }
+    spawn(x, y, rotation) {
+        this.x = x
+        this.y = y
+        this.rot = rotation
     }
     update() {
         this.y += this.ychange
