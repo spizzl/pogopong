@@ -4,6 +4,8 @@ var players = []
 var net, socket
 var gameIsStarted = false
 var updateSpeed = 1000 //in milliseconds
+var dialog = new UserDialog()
+
 //
 var canvSize, playerSize
 
@@ -12,6 +14,7 @@ function clog(msg) {
 }
 
 function setup() {
+    console.log( "ready!" );
     canvSize = windowWidth / 2
     playerSize = canvSize / 5
     if (canvSize < 500) canvSize = 500
@@ -32,6 +35,9 @@ function setup() {
     angleMode(DEGREES)
     rectMode(CENTER)
     textAlign(CENTER)
+
+
+    dialog.opendialog("main", "startdialog.html")
 }
 
 function startGame() {
@@ -40,12 +46,14 @@ function startGame() {
     //
     var playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
-    $('#chooseNameField')[0].remove()
+    $('#chooseNameField').remove()
     players.push(new Paddle(socket.id, playerName))
     //
     net.sendStartSignal()
     loop()
     gameIsStarted = true
+    dialog.closedialog("main")
+    dialog.closedialog("notification")
 }
 
 function draw() {
