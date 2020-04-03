@@ -1,17 +1,7 @@
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-}
-
-canvas {
-    margin-left: 25%;
-    margin-top: 2%;
-
-}
-
-#chooseNameField {
-    align-self: center;
-    margin: 20px;
+div.playground {
+  position: relative;
+  border-style: solid;
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
 }
