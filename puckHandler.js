@@ -1,4 +1,4 @@
-class puckHandler {
+class PuckHandler {
     //
     spawnPuck() {
         this.puck = new Puck()
@@ -23,6 +23,29 @@ class puckHandler {
         }
         return data
     }
+    //
+    puckHitsPaddle(p) {
+        if (this.puck.y - this.puck.r < p.y + p.h / 2 //
+            && this.puck.y + this.puck.r > p.y - p.h / 2 //
+            && (this.puck.x - this.puck.r < p.x + p.w / 2 || this.puck.x + this.puck.r > p.x - p.w / 2)) {
+            if (this.puck.x > p.x) {
+                let diff = this.puck.y - (p.y - p.h / 2);
+                let rad = radians(45);
+                let angle = map(diff, 0, p.h, -rad, rad);
+                this.puck.xspeed = 5 * cos(angle);
+                this.puck.yspeed = 5 * sin(angle);
+                this.puck.x = p.x + p.w / 2 + this.puck.r;
+            }
+            if (this.puck.x < p.x) {
+                let diff = this.y - (p.y - p.h / 2);
+                let angle = map(diff, 0, p.h, radians(225), radians(135));
+                this.puck.xspeed = 5 * cos(angle);
+                this.puck.yspeed = 5 * sin(angle);
+                this.puck.x = p.x - p.w / 2 - this.puck.r;
+            }
+        }
+    }
+    deflectPuck(p) {}
 }
 //
 class Puck {
@@ -51,38 +74,6 @@ class Puck {
         fill(255);
         ellipse(this.x, this.y, this.r * 2);
     }
-    checkPaddle(p) {
-        if (this.y - this.r < p.y + p.h / 2 && this.y + this.r > p.y - p.h / 2 && (this.x - this.r < p.x + p.w / 2 || this.x + this.r > p.x - p.w / 2)) {
-            if (this.x > p.x) {
-                let diff = this.y - (p.y - p.h / 2);
-                let rad = radians(45);
-                let angle = map(diff, 0, p.h, -rad, rad);
-                this.xspeed = 5 * cos(angle);
-                this.yspeed = 5 * sin(angle);
-                this.x = p.x + p.w / 2 + this.r;
-            }
-            if (this.x < p.x) {
-                let diff = this.y - (p.y - p.h / 2);
-                let angle = map(diff, 0, p.h, radians(225), radians(135));
-                this.xspeed = 5 * cos(angle);
-                this.yspeed = 5 * sin(angle);
-                this.x = p.x - p.w / 2 - this.r;
-            }
-        }
-    }
-    /*
-        checkPaddleRight(p) {
-            if (this.y - this.r < p.y + p.h / 2 && this.y + this.r > p.y - p.h / 2 && this.x + this.r > p.x - p.w / 2) {
-                if (this.x < p.x) {
-                    let diff = this.y - (p.y - p.h / 2);
-                    let angle = map(diff, 0, p.h, radians(225), radians(135));
-                    this.xspeed = 5 * cos(angle);
-                    this.yspeed = 5 * sin(angle);
-                    this.x = p.x - p.w / 2 - this.r;
-                }
-            }
-        }
-        */
     checkGoal(GOOOLisisisis) {
         var g = {
             x: 999,
