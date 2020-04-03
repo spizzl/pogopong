@@ -9,14 +9,18 @@ class NetworkController {
             players.push(newPlayer);
         });
         //
-        socket.on("update", function(data) {
+        socket.on("playerUpdate", function(data) {
             for (var i = players.length - 1; i >= 0; i--) {
                 if (players[i].id == data.id) {
                     clog("received: ")
                     clog(data)
-                    players[i].x = width * data.x;
+                    players[i].x = data.x;
                 }
             }
+        });
+        //
+        socket.on("puckUpdate", function(data) {
+            puck.setPosition(data.x, data.y)
         });
         //
         socket.on("player disconnected", function(data) {

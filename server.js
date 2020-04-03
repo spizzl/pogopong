@@ -10,11 +10,6 @@ clog('Server is running on port ' + PORT + ' !');
 function clog(msg) {
     console.log(msg);
 }
-/*
-const server = express()
-  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-  .listen(PORT, () => console.log(`lausche auf ${PORT}`));
-*/
 var atzen = [];
 var players = [];
 //
@@ -40,11 +35,12 @@ io.sockets.on('connection', (socket) => {
                 clog(players[i].id + " " + players[i].x);
                 players[i].updateValues(data.x)
                 //
-                socket.broadcast.emit("update", data)
+                socket.broadcast.emit("playerUpdate", data)
                 break
             }
         }
     })
+    //
     //
     socket.on('wieviele', function() {
         socket.emit("soviele", atzen.length);
@@ -77,3 +73,18 @@ class Player {
         return data;
     }
 }
+//
+//
+var puckX = 0
+
+function game(argument) {
+    puckX += 1
+    var data = {
+        x: puckX,
+        y: 100
+    }
+    io.sockets.emit("puckUpdate", data)
+}
+setInterval(function() {
+    game()
+}, 100)

@@ -17,7 +17,6 @@ function setup() {
     if (canvSize < 500) canvSize = 500
     createCanvas(500, 500)
     //TWO PLAYERS
-    players.push(new Paddle("", "", width - 20, height / 2, 0))
     //players.push(new Paddle("", "", 20, height / 2, 0))
     //THREE PLAYERS
     /*
@@ -36,29 +35,27 @@ function setup() {
 }
 
 function startGame() {
-    //
     socket = io.connect('http://localhost:5000');
     net.setup()
     //
     var playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
     $('#chooseNameField')[0].remove()
-    players[0].name = playerName
+    players.push(new Paddle(socket.id, playerName))
+    //
+    net.sendStartSignal()
     loop()
     gameIsStarted = true
-    net.sendStartSignal()
 }
 
 function draw() {
     if (gameIsStarted) {
-        background(0)
+        clear()
         players[0].update()
         //
         if (net.canUpdate) {
             net.sendUpdate()
         }
-        //net.receivePlayers()
-        //net.receivePuck()
         players.forEach(function(player) {
             player.show()
         })
