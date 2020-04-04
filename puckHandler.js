@@ -52,15 +52,13 @@ class PuckHandler {
 //
 class Puck {
     constructor() {
-        this.x = width / 2;
-        this.y = height / 2;
+        this.x = 500 / 2;
+        this.y = 500 / 2;
         this.xspeed = 0;
         this.yspeed = 0;
         this.r = 12;
     }
     start() {
-        this.x = width / 2;
-        this.y = height / 2;
         let angle = random(-PI / 4, PI / 4);
         this.xspeed = 5 * Math.cos(angle);
         this.yspeed = 5 * Math.sin(angle);
