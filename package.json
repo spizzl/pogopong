@@ -12,6 +12,7 @@
   "dependencies": {
     "ejs": "^2.5.6",
     "express": "^4.17.1",
+    "mathjs": "^6.6.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

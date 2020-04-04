@@ -1,4 +1,4 @@
-'use strict';
+//
 const express = require('express')
 const PORT = process.env.PORT || 5000
 var app = express()
@@ -15,7 +15,9 @@ var players = []
 //
 var PuckHandler = require('./puckHandler.js')
 var puckHandler = new PuckHandler()
-puckHandler.bla()
+//
+var Player = require('./Player.js')
+//
 var updateHeartbeat = 200
 //
 io.sockets.on('connection', (socket) => {
@@ -56,32 +58,20 @@ io.sockets.on('connection', (socket) => {
     socket.on('disconnect', function() {
         var index = atzen.indexOf(socket);
         atzen.splice(index)
-        players.splice(index)
-        clog('Ein Atze weniger mit der Nummer ' + socket.id);
+        for (var i = players.length - 1; i >= 0; i--) {
+            if (socket.id == players[i].id) {
+                players.splice(i, 1)
+            }
+        }
+        clog('Ein Atze weniger mit der Nummer ' + socket.id)
+        clog("Atzen now online: " + atzen.length)
+        clog("Players now online: " + players.length)
         //
         if (players.length == 0) {
             endGame()
         }
     })
 })
-class Player {
-    constructor(id, x) {
-        this.id = id;
-        this.x = x;
-    }
-    //
-    updateValues(x) {
-        this.x = x;
-    }
-    //
-    getValues() {
-        var data = {
-            id: this.id,
-            x: this.x
-        }
-        return data;
-    }
-}
 //
 function startGame() {
     puckHandler.spawnPuck()
