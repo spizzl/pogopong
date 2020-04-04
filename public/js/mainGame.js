@@ -3,7 +3,7 @@ let rightscore = 0
 var players = []
 var net, socket
 var gameIsStarted = false
-var updateSpeed = 1000 //in milliseconds
+var updateSpeed = 10000 //in milliseconds
 var dialog = new UserDialog()
 //
 var canvSize, playerSize

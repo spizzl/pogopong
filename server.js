@@ -40,10 +40,21 @@ io.sockets.on('connection', (socket) => {
         }
     })
     //
+    socket.on("data for new player", function(data, newPlayerId) {
+        clog("received data for new player")
+        //
+        for (var i = atzen.length - 1; i >= 0; i--) {
+            if (newPlayerId == atzen[i].id) {
+                atzen[i].emit("add existing players", data)
+                break;
+            }
+        }
+    });
+    //
     socket.on('update', function(data) {
         for (var i = players.length - 1; i >= 0; i--) {
             if (socket.id == players[i].id) {
-                clog(players[i].name + " " + players[i].x)
+                clog('update from ' + players[i].name + " " + players[i].x)
                 players[i].updateValues(data.x)
                 //
                 socket.broadcast.emit("playerUpdate", data)
