@@ -1,11 +1,12 @@
 class Player {
-    constructor(id, x) {
-        this.id = id;
-        this.x = x || 0;
+    constructor(id, name, x) {
+        this.id = id
+        this.x = x || 0
+        this.name = name
     }
     //
     updateValues(x) {
-        this.x = x;
+        this.x = x
     }
     //
     getValues() {

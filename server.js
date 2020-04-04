@@ -13,10 +13,10 @@ function clog(msg) {
 var atzen = []
 var players = []
 //
-var PuckHandler = require('./puckHandler.js')
+var PuckHandler = require('./js/puckHandler.js')
 var puckHandler = new PuckHandler()
 //
-var Player = require('./Player.js')
+var Player = require('./js/Player.js')
 //
 var updateHeartbeat = 200
 //
@@ -24,12 +24,13 @@ io.sockets.on('connection', (socket) => {
     //
     atzen.push(socket)
     console.log('Atze ist da mit der Nummer ' + socket.id)
-    clog("Players now online: " + atzen.length)
+    clog("Atzen now online: " + atzen.length)
     //
     socket.on('start', function(data) {
-        var newPlayer = new Player(socket.id)
+        var newPlayer = new Player(socket.id, data.name)
         players.push(newPlayer)
-        clog("starting: " + newPlayer.id)
+        console.log('Player ist da mit der Nummer ' + socket.id + ' und Name ' + data.name)
+        clog("Players now online: " + players.length)
         //
         //Inform other players of joined player
         socket.broadcast.emit("new player", data)
@@ -42,7 +43,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('update', function(data) {
         for (var i = players.length - 1; i >= 0; i--) {
             if (socket.id == players[i].id) {
-                clog(players[i].id + " " + players[i].x)
+                clog(players[i].name + " " + players[i].x)
                 players[i].updateValues(data.x)
                 //
                 socket.broadcast.emit("playerUpdate", data)
@@ -58,12 +59,14 @@ io.sockets.on('connection', (socket) => {
     socket.on('disconnect', function() {
         var index = atzen.indexOf(socket);
         atzen.splice(index)
+        var playerName;
         for (var i = players.length - 1; i >= 0; i--) {
             if (socket.id == players[i].id) {
                 players.splice(i, 1)
+                playerName = players.name
             }
         }
-        clog('Ein Atze weniger mit der Nummer ' + socket.id)
+        clog('Ein Atze und Player weniger mit der Nummer ' + socket.id + ' und Name ' + playerName)
         clog("Atzen now online: " + atzen.length)
         clog("Players now online: " + players.length)
         //

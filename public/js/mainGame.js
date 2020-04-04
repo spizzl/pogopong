@@ -5,7 +5,6 @@ var net, socket
 var gameIsStarted = false
 var updateSpeed = 1000 //in milliseconds
 var dialog = new UserDialog()
-
 //
 var canvSize, playerSize
 
@@ -14,7 +13,7 @@ function clog(msg) {
 }
 
 function setup() {
-    console.log( "ready!" );
+    background(0)
     canvSize = windowWidth / 2
     playerSize = canvSize / 5
     if (canvSize < 500) canvSize = 500
@@ -35,19 +34,18 @@ function setup() {
     angleMode(DEGREES)
     rectMode(CENTER)
     textAlign(CENTER)
-
-
     dialog.opendialog("main", "startdialog.html")
+    socket = io.connect('http://localhost:5000');
 }
 
 function startGame() {
-    socket = io.connect('http://localhost:5000');
     net.setup()
     //
     var playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
     $('#chooseNameField').remove()
     players.push(new Paddle(socket.id, playerName))
+    players[0].spawn(random(width), random(height), 0)
     //
     net.sendStartSignal()
     loop()
@@ -58,7 +56,6 @@ function startGame() {
 
 function draw() {
     if (gameIsStarted) {
-        clear()
         players[0].update()
         //
         if (net.canUpdate) {
