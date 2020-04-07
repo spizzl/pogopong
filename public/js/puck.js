@@ -1,15 +1,15 @@
 class Puck {
-    constructor() {
-        this.x
-        this.y
-        this.r = 12
-    }
-    setPosition(x, y) {
+    constructor(x, clr, pos) {
         this.x = x
-        this.y = y
+        this.color = clr
+        this.position = pos
+        this.rotation = rot
     }
-    show() {
-        fill(255)
-        ellipse(this.x, this.y, this.r * 2)
+    move(xchange) {
+      this.x += xchange
+    }
+    render(x, y) {
+        fill(clr)
+        ellipse(x, y)
     }
 }
