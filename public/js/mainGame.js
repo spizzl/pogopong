@@ -66,4 +66,6 @@ function draw() {
         })
         puck.show()
     }
+    fill(255)
+    ellipse(mouseX, mouseY, 20)
 }
