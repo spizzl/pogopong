@@ -35,7 +35,7 @@ io.sockets.on('connection', (socket) => {
         //Inform other players of joined player
         socket.broadcast.emit("new player", data)
         //
-        if (players.length == 1) {
+        if (players.length == 2) {
             startGame()
         }
     })
@@ -69,15 +69,18 @@ io.sockets.on('connection', (socket) => {
         var playerName;
         for (var i = players.length - 1; i >= 0; i--) {
             if (socket.id == players[i].id) {
+                socket.broadcast.emit("player disconnected", players[i].id)
                 players.splice(i, 1)
-                playerName = players.name
+                break
             }
         }
+        //
+        //
         clog('Ein Atze und Player weniger mit der Nummer ' + socket.id + ' und Name ' + playerName)
         clog("Atzen now online: " + atzen.length)
         clog("Players now online: " + players.length)
         //
-        if (players.length == 0) {
+        if (players.length == 0 || players.length == 1) {
             endGame()
         }
     })
@@ -100,7 +103,7 @@ function game() {
     players.forEach(function(player) {
         puckHandler.checkPuckCollision(player)
     })
-    puckHandler.checkEdges()
+    //puckHandler.checkEdges()
     //
     puckHandler.updatePuck()
     //

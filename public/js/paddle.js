@@ -8,6 +8,7 @@ class Paddle {
         this.name = name || ""
         this.mov
         this.ychange = 0
+        this.hasMoved = false
     }
     spawn() {
         this.x = this.mov.p2.x
@@ -23,6 +24,11 @@ class Paddle {
     }
     move(steps) {
         this.ychange = steps
+        if (steps == 0) {
+            this.hasMoved = false
+        } else {
+            this.hasMoved = true
+        }
     }
     show() {
         fill(255)
@@ -30,10 +36,10 @@ class Paddle {
         translate(this.x, this.y)
         rotate(this.rot)
         rect(0, 0, this.w, this.h)
-        textSize(30)
-        fill(255)
-        rotate(this.rot)
-        text(this.name, 0, playerSize * 0.6)
+        textSize(20)
+        fill(0)
+        rotate(90)
+        text(this.name, 0, 0)
         pop()
     }
     showscore() {

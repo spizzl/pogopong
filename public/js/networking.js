@@ -12,7 +12,7 @@ class NetworkController {
                 name: players[0].name
             }
             //
-            respawnPlayer()
+            resetGame()
             //
             socket.emit("data for new player", myData, data.id)
         });
@@ -23,7 +23,7 @@ class NetworkController {
             var newPlayer = new Paddle(data.id, data.name)
             players.push(newPlayer);
             //
-            respawnPlayer()
+            resetGame()
         });
         //
         socket.on("playerUpdate", function(data) {
@@ -43,8 +43,8 @@ class NetworkController {
         //
         socket.on("player disconnected", function(data) {
             for (var i = players.length - 1; i >= 0; i--) {
-                if (players[i].id == data.id) {
-                    players.splice(i + 1, 1);
+                if (players[i].id == data) { //data is the player who left
+                    players.splice(i, 1);
                     break;
                 }
             }

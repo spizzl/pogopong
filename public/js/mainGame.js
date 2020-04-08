@@ -1,13 +1,10 @@
 let net, socket, dialog
 var gameIsStarted = false
-let updateSpeed = 200 //in milliseconds
+let updateSpeed = 100 //in milliseconds
 //
 let canvSize, playerSize
 var players = []
-
-function clog(msg) {
-    console.log(msg);
-}
+let clog = console.log
 
 function setup() {
     background(0)
@@ -36,30 +33,37 @@ function startGame() {
     //
     var mainPlayer = new Paddle(socket.id, playerName)
     players.push(mainPlayer)
-    respawnPlayer()
     //
     net.sendStartSignal()
-    loop()
-    gameIsStarted = true
     dialog.closedialog("main")
     dialog.closedialog("notification")
+    //
 }
 
 function draw() {
-    if (gameIsStarted && players.length >= 2) {
+    if (gameIsStarted) {
         background(0)
         players[0].update()
         //
-        if (net.canUpdate) {
+        if (net.canUpdate && players[0].hasMoved) {
             net.sendUpdate()
+            clog("sendit")
         }
         players.forEach(function(player) {
             player.show()
         })
         puck.show()
         if (!socket.id) { //if disconnected
-            gameIsStarted = false
+            clog("DISCONNECTED")
         }
+    }
+}
+
+function resetGame() {
+    if (players.length == 2 || players.length == 3) {
+        loop()
+        gameIsStarted = true
+        respawnPlayer()
     }
 }
 
