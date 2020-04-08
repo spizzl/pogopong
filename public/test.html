@@ -1,48 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/socket.io/socket.io.js"></script>
-
-        <script>
-            //DER KOT
-
-  var socket = io()
-  socket.on('soviele', function(onlineplayer) {
-    console.log("Ehre")
-    dies = document.getElementById('server-time')
-    dies.innerHTML = onlineplayer
-  })
-
-  otzo = function() {
-    socket.emit("wieviele")
-  }
+        <script src="/libraries/p5.js" type="text/javascript">
+        </script>
+        <script src="./js/test.js" type="text/javascript">
         </script>
     </head>
     <body>
-        <center>
-            <div class="jumbotron text-center">
-                <div class="container">
-                    <a class="lang-logo" href="/">
-                        <img src="/lang-logo.png">
-                        </img>
-                    </a>
-                    <h1>
-                        PongoPing
-                    </h1>
-                    <button onclick="otzo();"></button>
-                    <a>
-                        Es sind momentan
-                    </a>
-                    <a id="server-time">
-                        0
-                    </a>
-                    <a>
-                        Atzen online
-                    </a>
-                </div>
-            </div>
-            <div class="container">
-            </div>
-        </center>
+        <div class="playground" id="playground">
+        </div>
     </body>
 </html>

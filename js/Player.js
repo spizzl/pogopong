@@ -3,16 +3,20 @@ class Player {
         this.id = id
         this.x = x || 0
         this.name = name
+        this.h = 800 / 5
+        this.w = this.h / 5
     }
     //
-    updateValues(x) {
+    updateValues(x, y) {
         this.x = x
+        this.y = y
     }
     //
     getValues() {
         var data = {
             id: this.id,
-            x: this.x
+            x: this.x,
+            y: this.y
         }
         return data;
     }

@@ -2,16 +2,20 @@ class Paddle {
     constructor(id, name) {
         this.id = id
         //
-        this.h = width / 5
+        this.h = 800 / 5
         this.w = this.h / 5
-        this.ychange = 0
         this.score = 0;
-        this.name = name || "";
+        this.name = name || ""
+        this.mov
+        this.ychange = 0
     }
-    spawn(x, y, rotation) {
+    spawn() {
+        this.x = this.mov.p2.x
+        this.y = this.mov.p2.y / 2
+    }
+    setPosition(x, y) {
         this.x = x
         this.y = y
-        this.rot = rotation
     }
     update() {
         this.y += this.ychange
@@ -26,7 +30,7 @@ class Paddle {
         translate(this.x, this.y)
         rotate(this.rot)
         rect(0, 0, this.w, this.h)
-        textSize(15)
+        textSize(30)
         fill(255)
         rotate(this.rot)
         text(this.name, 0, playerSize * 0.6)

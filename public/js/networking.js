@@ -11,6 +11,9 @@ class NetworkController {
                 id: socket.id,
                 name: players[0].name
             }
+            //
+            respawnPlayer()
+            //
             socket.emit("data for new player", myData, data.id)
         });
         //
@@ -20,17 +23,15 @@ class NetworkController {
             var newPlayer = new Paddle(data.id, data.name)
             players.push(newPlayer);
             //
+            respawnPlayer()
         });
         //
         socket.on("playerUpdate", function(data) {
-            clog("received: ")
-            clog(data)
+            //clog("received: ")
+            //clog(data)
             for (var i = players.length - 1; i >= 0; i--) {
-                clog(players[i].id)
                 if (players[i].id == data.id) {
-                    clog("received: ")
-                    clog(data)
-                    players[i].x = data.x;
+                    players[i].setPosition(data.x, data.y)
                     break
                 }
             }
@@ -47,6 +48,7 @@ class NetworkController {
                     break;
                 }
             }
+            //
         });
     }
     sendStartSignal() {
@@ -56,8 +58,6 @@ class NetworkController {
         }
         socket.emit("start", data)
     }
-    receivePlayers() {}
-    receivePuck() {}
     //
     sendUpdate() {
         this.canUpdate = false;
@@ -65,12 +65,13 @@ class NetworkController {
             net.canUpdate = true
         }, updateSpeed)
         var data = {
+            id: socket.id,
             x: players[0].x,
-            id: socket.id
+            y: players[0].y
         }
         //
-        clog("sending: ")
-        clog(data)
+        //clog("sending: ")
+        //clog(data)
         socket.emit("update", data);
     }
 }

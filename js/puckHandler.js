@@ -1,13 +1,6 @@
 class PuckHandler {
-    constructor(w, h) {
-        this.width = w
-        this.height = this.width
-        const {
-            sin,
-            cos,
-            random,
-            map
-        } = require('mathjs')
+    constructor() {
+        //
     }
     //
     spawnPuck() {
@@ -33,8 +26,7 @@ class PuckHandler {
     checkPuckCollision(p) {
         const {
             sin,
-            cos,
-            map
+            cos
         } = require('mathjs')
         if (this.puck.y - this.puck.r < p.y + p.h / 2 //
             && this.puck.y + this.puck.r > p.y - p.h / 2 //
@@ -58,12 +50,30 @@ class PuckHandler {
             }
         }
     }
+    checkGoal(g) {
+        /*var g = {
+            x: 999,
+            y: 999,
+            w: 100,
+            h: 100
+        }*/
+        if (this.puck.y - this.puck.r < g.y + g.h / 2 //
+            && this.puck.y + this.puck.r > g.y - g.h / 2 //
+            && (this.puck.x - this.puck.r < g.x + g.w / 2 || this.puck.x + this.puck.r > g.x - g.w / 2)) {
+            //
+        }
+    }
+    checkEdges() {
+        if (this.puck.y < 0 || this.puck.y > 800) {
+            this.puck.yspeed *= -1;
+        }
+    }
 }
 //
 class Puck {
     constructor() {
-        this.x = this.width / 2;
-        this.y = this.height / 2;
+        this.x = 400;
+        this.y = 400;
         this.xspeed = 0;
         this.yspeed = 0;
         this.r = 12;
@@ -76,8 +86,8 @@ class Puck {
             pi
         } = require('mathjs')
         let angle = random(-pi / 4, pi / 4);
-        this.xspeed = 5 * cos(angle);
-        this.yspeed = 5 * sin(angle);
+        this.xspeed = 15 * cos(angle);
+        this.yspeed = 15 * sin(angle);
         if (random() < 0.5) {
             this.xspeed *= -1;
         }
@@ -86,24 +96,10 @@ class Puck {
         this.x += this.xspeed;
         this.y += this.yspeed;
     }
-    checkGoal(g) {
-        /*var g = {
-            x: 999,
-            y: 999,
-            w: 100,
-            h: 100
-        }*/
-        if (this.y - this.r < g.y + g.h / 2 //
-            && this.y + this.r > g.y - g.h / 2 //
-            && (this.x - this.r < g.x + g.w / 2 || this.x + this.r > g.x - g.w / 2)) {
-            //
-        }
-    }
-    checkEdges() {
-        if (this.y < 0 || this.y > height) {
-            this.yspeed *= -1;
-        }
-    }
+}
+//
+function map(n, start1, stop1, start2, stop2) {
+    return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
 }
 //
 module.exports = PuckHandler

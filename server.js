@@ -54,17 +54,13 @@ io.sockets.on('connection', (socket) => {
     socket.on('update', function(data) {
         for (var i = players.length - 1; i >= 0; i--) {
             if (socket.id == players[i].id) {
-                clog('update from ' + players[i].name + " " + players[i].x)
-                players[i].updateValues(data.x)
+                //clog('update from ' + players[i].name + " " + players[i].x)
+                players[i].updateValues(data.x, data.y)
                 //
                 socket.broadcast.emit("playerUpdate", data)
                 break
             }
         }
-    })
-    //
-    socket.on('wieviele', function() {
-        socket.emit("soviele", atzen.length);
     })
     //
     socket.on('disconnect', function() {
@@ -104,7 +100,11 @@ function game() {
     players.forEach(function(player) {
         puckHandler.checkPuckCollision(player)
     })
+    puckHandler.checkEdges()
+    //
     puckHandler.updatePuck()
+    //
+    //
     var data = puckHandler.getPuck()
     io.sockets.emit("puckUpdate", data)
 }

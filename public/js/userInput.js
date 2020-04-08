@@ -1,5 +1,3 @@
-var paused = false
-
 function keyReleased() {
     if (gameIsStarted) {
         players[0].move(0)

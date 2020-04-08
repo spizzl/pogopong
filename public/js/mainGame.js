@@ -1,12 +1,9 @@
-let leftscore = 0
-let rightscore = 0
-var players = []
-var net, socket
+let net, socket, dialog
 var gameIsStarted = false
-var updateSpeed = 10000 //in milliseconds
-var dialog = new UserDialog()
+let updateSpeed = 200 //in milliseconds
 //
-var canvSize, playerSize
+let canvSize, playerSize
+var players = []
 
 function clog(msg) {
     console.log(msg);
@@ -14,21 +11,14 @@ function clog(msg) {
 
 function setup() {
     background(0)
-    canvSize = windowWidth / 2
-    playerSize = canvSize / 5
-    if (canvSize < 500) canvSize = 500
-    createCanvas(500, 500)
-    //TWO PLAYERS
-    //players.push(new Paddle("", "", 20, height / 2, 0))
-    //THREE PLAYERS
-    /*
-        players.push(new Paddle(width - playerSize, height / 2 + playerSize, 45))
-        players.push(new Paddle(playerSize, height / 2 + playerSize, -45))
-        players.push(new Paddle(width / 2, height / 2 - playerSize * 2, 90))
-    */
+    playerSize = 800 / 10
+    createCanvas(800, 800)
+    let canvas = createCanvas(800, 800)
+    canvas.parent('playground')
     //
     net = new NetworkController()
     puck = new Puck()
+    dialog = new UserDialog()
     //
     noLoop()
     angleMode(DEGREES)
@@ -41,11 +31,12 @@ function setup() {
 function startGame() {
     net.setup()
     //
-    var playerName = $('#nameInput')[0].value
+    let playerName = $('#nameInput')[0].value
     console.log($('#nameInput')[0].value)
-    $('#chooseNameField').remove()
-    players.push(new Paddle(socket.id, playerName))
-    players[0].spawn(random(width), random(height), 0)
+    //
+    var mainPlayer = new Paddle(socket.id, playerName)
+    players.push(mainPlayer)
+    respawnPlayer()
     //
     net.sendStartSignal()
     loop()
@@ -55,7 +46,8 @@ function startGame() {
 }
 
 function draw() {
-    if (gameIsStarted) {
+    if (gameIsStarted && players.length >= 2) {
+        background(0)
         players[0].update()
         //
         if (net.canUpdate) {
@@ -65,7 +57,51 @@ function draw() {
             player.show()
         })
         puck.show()
-    } 
-    fill(255)
-    ellipse(mouseX, mouseY, 20)
+        if (!socket.id) { //if disconnected
+            gameIsStarted = false
+        }
+    }
+}
+
+function respawnPlayer() {
+    var movementLines2P = [{
+        p1: {
+            x: 40,
+            y: 0
+        },
+        p2: {
+            x: 40,
+            y: 800
+        }
+    }, {
+        p1: {
+            x: 760,
+            y: 0
+        },
+        p2: {
+            x: 760,
+            y: 800
+        }
+    }]
+    var allPlayerIds = []
+    players.forEach(function(player) {
+        allPlayerIds.push(player.id)
+    })
+    allPlayerIds.sort() //sorts alphabetically
+    //
+    if (players.length == 2) {
+        let ownPlayerNumber = allPlayerIds.indexOf(socket.id)
+        //
+        if (ownPlayerNumber == 0) {
+            players[0].mov = movementLines2P[0]
+            players[0].spawn()
+            //
+        } else if (ownPlayerNumber == 1) {
+            players[0].mov = movementLines2P[1]
+            players[0].spawn()
+            //
+        }
+    } else if (players.length == 3) {
+        //
+    }
 }
